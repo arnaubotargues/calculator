@@ -50,12 +50,71 @@ for( let i=num-1; i>=1;i--){
 return total;
 };
 
-// Do not edit below this line
-module.exports = {
-  add,
-  subtract,
-  sum,
-  multiply,
-  power,
-  factorial
-};
+let operator = "";
+let num1=""; 
+let num2 = "";
+const container = document.querySelector("#calculator-buttons")
+const numbers = document.querySelectorAll(".number")
+const operators = document.querySelectorAll(".operator")
+let pantalla = document.querySelector(".pantalla")
+let isSecondNumber = false;
+
+
+numbers.forEach((button) => {
+  button.addEventListener("click",() => {
+    if(!isSecondNumber){
+      num1 += button.innerText
+    pantalla.innerText= num1;
+    console.log(num1);
+    }else{
+
+    num2+=button.innerText;
+    console.log(num2);
+    }
+  })
+})
+
+operators.forEach((button) => {
+  button.addEventListener("click", () => {
+    const value = button.innerText;
+
+    if (value === "AC") {
+      num1 = "";
+      num2 = "";
+      operator = "";
+      isSecondNumber = false;
+      pantalla.innerText = "0";
+    } else if (value === "=") {
+      let result = 0;
+      if (operator === "+") result = Number(num1) + Number(num2);
+      if (operator === "-") result = Number(num1) - Number(num2);
+      if (operator === "x") result = Number(num1) * Number(num2);
+      if (operator === "/") result = Number(num1) / Number(num2);
+
+      pantalla.innerText = result;
+      num1 = result.toString();
+      num2 = "";
+      operator = "";
+      isSecondNumber = false;
+    } else {
+      operator = value;
+      isSecondNumber = true;
+    }
+  });
+});
+
+
+
+function operate(num1,num2){
+  if(operator === "+"){
+    return add(num1,num2)
+  }
+  if (operator === "-"){
+    return subtract(num1,num2);
+  }
+  if(operator === "X"){
+    return multiply(num1,num2)
+  }
+ 
+
+}
